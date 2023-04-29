@@ -1,41 +1,45 @@
+import React, { useState } from 'react';
 import './App.css';
 
 
-type Props = {
+type User = {
   name: string;
+  email: string;
   age: number;
-  address: string;
-  phone: string;
 }
 
-const ParentComponent: React.FC<Props> = props => {
-  const {name, age} = props;
-
-  return <div>
-    <h1>{name}</h1>
-    <p>Age: {age}</p>
-    <ChildComponent name={name} age={age}/>
-  </div>
+type UserFormProps = {
+  user: Partial<User>
 }
 
+const UserForm = ({ user }: UserFormProps) => {
+  const [name, setName] = useState(user.name ?? "")
+  const [email, setEmail] = useState(user.email ?? "")
+  const [age, setAge] = useState(user.age ?? "")
 
-type ChildProps = Pick<Props, "name" |"age">
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    console.log({ name, age, email });
+  }
 
-const ChildComponent: React.FC<ChildProps> = props => {
-
-  return <div>
-    <h2>Child Component</h2>
-    <p>Name: {props.name}</p>
-    <pre>Age: {props.age}</pre>
-  </div>
-
+  return <form onSubmit={handleSubmit}>
+    <label>Name</label>
+    <input type='text' value={name} onChange={e => setName(e.target.value)} />
+    <label>Age</label>
+    <input type='number' value={age} onChange={e => setAge(e.target.value)} />
+    <label>Email</label>
+    <input type='email' value={email} onChange={e => setEmail(e.target.value)} />
+     <br />
+      <button type="submit">Submit</button>
+  </form>
 }
 
 function App() {
+  const user: Partial<User> = {name: "john"}
   return (
     <div className="App">
       <h1>Intermediaate Typescript</h1>
-      <ParentComponent name='Nikhil' age={24} address='560/1' phone='6280208220'/>
+      <UserForm user={user} />
     </div>
   );
 }
