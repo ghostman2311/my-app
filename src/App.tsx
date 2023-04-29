@@ -1,24 +1,41 @@
 import './App.css';
-import ClickCounter from './components/ClickCounter';
-import { withLoading } from './components/withLoading';
-// import { withTimer } from './components/withCounter';
-
-// const ClickCounterWithTimer = withTimer(ClickCounter)
 
 
-const List: React.FC = () => {
-  return <div>I am the data</div>;
-};
+type Props = {
+  name: string;
+  age: number;
+  address: string;
+  phone: string;
+}
+
+const ParentComponent: React.FC<Props> = props => {
+  const {name, age} = props;
+
+  return <div>
+    <h1>{name}</h1>
+    <p>Age: {age}</p>
+    <ChildComponent name={name} age={age}/>
+  </div>
+}
 
 
-const ListWithLoading = withLoading(List);
+type ChildProps = Pick<Props, "name" |"age">
+
+const ChildComponent: React.FC<ChildProps> = props => {
+
+  return <div>
+    <h2>Child Component</h2>
+    <p>Name: {props.name}</p>
+    <pre>Age: {props.age}</pre>
+  </div>
+
+}
 
 function App() {
   return (
     <div className="App">
       <h1>Intermediaate Typescript</h1>
-      {/* <ClickCounterWithTimer /> */}
-      <ListWithLoading loading={false}/>
+      <ParentComponent name='Nikhil' age={24} address='560/1' phone='6280208220'/>
     </div>
   );
 }
