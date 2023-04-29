@@ -1,14 +1,24 @@
 import './App.css';
 import ClickCounter from './components/ClickCounter';
-import { withTimer } from './components/withCounter';
+import { withLoading } from './components/withLoading';
+// import { withTimer } from './components/withCounter';
 
-const ClickCounterWithTimer = withTimer(ClickCounter)
+// const ClickCounterWithTimer = withTimer(ClickCounter)
+
+
+const List: React.FC = () => {
+  return <div>I am the data</div>;
+};
+
+
+const ListWithLoading = withLoading(List);
 
 function App() {
   return (
     <div className="App">
       <h1>Intermediaate Typescript</h1>
-      <ClickCounterWithTimer />
+      {/* <ClickCounterWithTimer /> */}
+      <ListWithLoading loading={false}/>
     </div>
   );
 }
